@@ -42,5 +42,21 @@ Another tool is `skimr::skim`, although it’s more “neat” than useful.
 skimr::skim(litters_df)
 ```
 
+## Options in `read_*`
 
+* `col_names`: usually TRUE. If FALSE, column names are X1, X1, … . You can also supply column names.
+* `na`: string vector containing character expressions for missing values.
+* `skip`: number of rows to skip before reading data.
+
+Skip the first 10 rows, and not assume the first row are variable names
+```{r}
+litters_df=read_csv("data/FAS_litters.csv",skip=10,col_names=FALSE)
+```
+
+Look at NA values
+
+The following code can replace all the number 19 in the dataset with `NA`
+```{r}
+litters_df=read_csv("data/FAS_litters.csv",na=c("NA",19))
+```
 

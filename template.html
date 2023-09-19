@@ -675,6 +675,39 @@ than useful.</p>
 </tbody>
 </table>
 </div>
+<div id="options-in-read_" class="section level2">
+<h2>Options in <code>read_*</code></h2>
+<ul>
+<li><code>col_names</code>: usually TRUE. If FALSE, column names are X1,
+X1, … . You can also supply column names.</li>
+<li><code>na</code>: string vector containing character expressions for
+missing values.</li>
+<li><code>skip</code>: number of rows to skip before reading data.</li>
+</ul>
+<p>Skip the first 10 rows, and not assume the first row are variable
+names</p>
+<pre class="r"><code>litters_df=read_csv(&quot;data/FAS_litters.csv&quot;,skip=10,col_names=FALSE)</code></pre>
+<pre><code>## Rows: 40 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (2): X1, X2
+## dbl (6): X3, X4, X5, X6, X7, X8
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>Look at NA values</p>
+<p>The following code can replace all the number 19 in the dataset with
+<code>NA</code></p>
+<pre class="r"><code>litters_df=read_csv(&quot;data/FAS_litters.csv&quot;,na=c(&quot;NA&quot;,19))</code></pre>
+<pre><code>## Rows: 49 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (2): Group, Litter Number
+## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 
 
 
