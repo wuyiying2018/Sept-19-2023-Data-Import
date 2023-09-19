@@ -60,3 +60,16 @@ The following code can replace all the number 19 in the dataset with `NA`
 litters_df=read_csv("data/FAS_litters.csv",na=c("NA",19))
 ```
 
+## Parsing columns
+Using the cols function, you can give each column a type:
+```{r}
+litters_df = read_csv(file = "./data/FAS_litters.csv",
+  col_types = cols(
+    Group = col_factor()
+  )
+)
+head(litters_df)
+```
+## Other file formats
+
+

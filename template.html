@@ -708,6 +708,30 @@ names</p>
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+<div id="parsing-columns" class="section level2">
+<h2>Parsing columns</h2>
+<p>Using the cols function, you can give each column a type:</p>
+<pre class="r"><code>litters_df = read_csv(file = &quot;./data/FAS_litters.csv&quot;,
+  col_types = cols(
+    Group = col_factor()
+  )
+)
+head(litters_df)</code></pre>
+<pre><code>## # A tibble: 6 × 8
+##   Group `Litter Number` `GD0 weight` `GD18 weight` `GD of Birth`
+##   &lt;fct&gt; &lt;chr&gt;                  &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Con7  #85                     19.7          34.7            20
+## 2 Con7  #1/2/95/2               27            42              19
+## 3 Con7  #5/5/3/83/3-3           26            41.4            19
+## 4 Con7  #5/4/2/95/2             28.5          44.1            19
+## 5 Con7  #4/2/95/3-3             NA            NA              20
+## 6 Con7  #2/2/95/3-2             NA            NA              20
+## # ℹ 3 more variables: `Pups born alive` &lt;dbl&gt;, `Pups dead @ birth` &lt;dbl&gt;,
+## #   `Pups survive` &lt;dbl&gt;</code></pre>
+</div>
+<div id="other-file-formats" class="section level2">
+<h2>Other file formats</h2>
+</div>
 
 
 
