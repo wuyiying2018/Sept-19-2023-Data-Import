@@ -13,6 +13,7 @@ litters_df=read_csv("./data/FAS_litters.csv")
 ```
 
 use `janitor::clean_names()` to clean up variable names after importing data. Doing so will take whatever the column names are and convert them to lower snake case.
+
 ```{r}
 names(litters_df)
 #make the variable names all lowercase
@@ -21,23 +22,30 @@ names(litters_df)
 ```
 
 _**Learning Assessment: **_load the FAS_pups.csv dataset
+
 ```{r}
 pup_df=read_csv("./data/FAS_pups.csv")
 litters_df=janitor::clean_names(litters_df)
 ```
+
 ## Looking at data
+
 ```{r}
 litters_df
 head(litters_df)
 tail(litters_df)
 ```
+
 You can use `view(litters_df)` to view the whole dataset.
 
 Looking at a data summary
+
 ```{r}
 str(litters_df)
 ```
+
 Another tool is `skimr::skim`, although it’s more “neat” than useful.
+
 ```{r}
 skimr::skim(litters_df)
 ```
@@ -49,6 +57,7 @@ skimr::skim(litters_df)
 * `skip`: number of rows to skip before reading data.
 
 Skip the first 10 rows, and not assume the first row are variable names
+
 ```{r}
 litters_df=read_csv("data/FAS_litters.csv",skip=10,col_names=FALSE)
 ```
@@ -56,12 +65,14 @@ litters_df=read_csv("data/FAS_litters.csv",skip=10,col_names=FALSE)
 Look at NA values
 
 The following code can replace all the number 19 in the dataset with `NA`
+
 ```{r}
 litters_df=read_csv("data/FAS_litters.csv",na=c("NA",19))
 ```
 
 ## Parsing columns
 Using the cols function, you can give each column a type:
+
 ```{r}
 litters_df = read_csv(file = "./data/FAS_litters.csv",
   col_types = cols(
@@ -70,19 +81,32 @@ litters_df = read_csv(file = "./data/FAS_litters.csv",
 )
 head(litters_df)
 ```
+
 ## Other file formats
 read excel
+
 ```{r}
 library(readxl)
 mlb11_data = read_excel("data/mlb11.xlsx", n_max = 20)
 head(mlb11_data, 5)
 ```
+
 read sas file
+
 ```{r}
 library(haven)
 pulse_data = read_sas("./data/public_pulse_data.sas7bdat")
 head(pulse_data, 5)
 ```
 
+## Base R ...
+don't use `read.csv`
+
+## write csv: exporting data
+```{r}
+litters_df=read_csv("./data/FAS_litters.csv")
+litters_df=janitor::clean_names(litters_df)
+write_csv(litters_df,"data/litters_df.csv")
+```
 
 
