@@ -278,3 +278,20 @@ head(mlb11_data, 5)
     ## 4 Kansas Cit…   730    5672  1560      129   0.275       1006          153    71
     ## 5 St. Louis …   762    5532  1513      162   0.273        978           57    90
     ## # ℹ 3 more variables: new_onbase <dbl>, new_slug <dbl>, new_obs <dbl>
+
+read sas file
+
+``` r
+library(haven)
+pulse_data = read_sas("./data/public_pulse_data.sas7bdat")
+head(pulse_data, 5)
+```
+
+    ## # A tibble: 5 × 7
+    ##      ID   age Sex   BDIScore_BL BDIScore_01m BDIScore_06m BDIScore_12m
+    ##   <dbl> <dbl> <chr>       <dbl>        <dbl>        <dbl>        <dbl>
+    ## 1 10003  48.0 male            7            1            2            0
+    ## 2 10015  72.5 male            6           NA           NA           NA
+    ## 3 10022  58.5 male           14            3            8           NA
+    ## 4 10026  72.7 male           20            6           18           16
+    ## 5 10035  60.4 male            4            0            1            2
