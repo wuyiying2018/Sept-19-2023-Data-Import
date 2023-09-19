@@ -1,6 +1,6 @@
 ---
 title: "Data Wrangling I: Data Import"
-output: html_document
+output: github_document
 ---
 ```{r}
 library("tidyverse")
@@ -71,5 +71,11 @@ litters_df = read_csv(file = "./data/FAS_litters.csv",
 head(litters_df)
 ```
 ## Other file formats
+read excel
+```{r}
+library(readxl)
+mlb11_data = read_excel("data/mlb11.xlsx", n_max = 20)
+head(mlb11_data, 5)
+```
 
 
