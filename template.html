@@ -370,6 +370,8 @@ pre code {
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<div id="data-paths" class="section level2">
+<h2>Data Paths</h2>
 <p>Let’s import the <code>FAS_litters.csv</code></p>
 <pre class="r"><code>litters_df=read_csv(&quot;./data/FAS_litters.csv&quot;)</code></pre>
 <pre><code>## Rows: 49 Columns: 8
@@ -380,12 +382,298 @@ pre code {
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>use <code>janitor::clean_names()</code> to clean up variable names
+after importing data. Doing so will take whatever the column names are
+and convert them to lower snake case.</p>
+<pre class="r"><code>names(litters_df)</code></pre>
+<pre><code>## [1] &quot;Group&quot;             &quot;Litter Number&quot;     &quot;GD0 weight&quot;       
+## [4] &quot;GD18 weight&quot;       &quot;GD of Birth&quot;       &quot;Pups born alive&quot;  
+## [7] &quot;Pups dead @ birth&quot; &quot;Pups survive&quot;</code></pre>
 <pre class="r"><code>#make the variable names all lowercase
-litters_df=janitor::clean_names(litters_df)</code></pre>
-<div id="section-1" class="section level1">
-<h1>Section 1</h1>
-<p>Here’s a <strong>code chunk</strong> that samples from a <em>normal
-distribution</em>:</p>
+litters_df=janitor::clean_names(litters_df)
+names(litters_df)</code></pre>
+<pre><code>## [1] &quot;group&quot;           &quot;litter_number&quot;   &quot;gd0_weight&quot;      &quot;gd18_weight&quot;    
+## [5] &quot;gd_of_birth&quot;     &quot;pups_born_alive&quot; &quot;pups_dead_birth&quot; &quot;pups_survive&quot;</code></pre>
+<p>_<strong>Learning Assessment: </strong>_load the FAS_pups.csv
+dataset</p>
+<pre class="r"><code>pup_df=read_csv(&quot;./data/FAS_pups.csv&quot;)</code></pre>
+<pre><code>## Rows: 313 Columns: 6
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): Litter Number
+## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>litters_df=janitor::clean_names(litters_df)</code></pre>
+</div>
+<div id="looking-at-data" class="section level2">
+<h2>Looking at data</h2>
+<pre class="r"><code>litters_df</code></pre>
+<pre><code>## # A tibble: 49 × 8
+##    group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+##    &lt;chr&gt; &lt;chr&gt;                &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
+##  1 Con7  #85                   19.7        34.7          20               3
+##  2 Con7  #1/2/95/2             27          42            19               8
+##  3 Con7  #5/5/3/83/3-3         26          41.4          19               6
+##  4 Con7  #5/4/2/95/2           28.5        44.1          19               5
+##  5 Con7  #4/2/95/3-3           NA          NA            20               6
+##  6 Con7  #2/2/95/3-2           NA          NA            20               6
+##  7 Con7  #1/5/3/83/3-3/2       NA          NA            20               9
+##  8 Con8  #3/83/3-3             NA          NA            20               9
+##  9 Con8  #2/95/3               NA          NA            20               8
+## 10 Con8  #3/5/2/2/95           28.5        NA            20               8
+## # ℹ 39 more rows
+## # ℹ 2 more variables: pups_dead_birth &lt;dbl&gt;, pups_survive &lt;dbl&gt;</code></pre>
+<pre class="r"><code>head(litters_df)</code></pre>
+<pre><code>## # A tibble: 6 × 8
+##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+##   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
+## 1 Con7  #85                 19.7        34.7          20               3
+## 2 Con7  #1/2/95/2           27          42            19               8
+## 3 Con7  #5/5/3/83/3-3       26          41.4          19               6
+## 4 Con7  #5/4/2/95/2         28.5        44.1          19               5
+## 5 Con7  #4/2/95/3-3         NA          NA            20               6
+## 6 Con7  #2/2/95/3-2         NA          NA            20               6
+## # ℹ 2 more variables: pups_dead_birth &lt;dbl&gt;, pups_survive &lt;dbl&gt;</code></pre>
+<pre class="r"><code>tail(litters_df)</code></pre>
+<pre><code>## # A tibble: 6 × 8
+##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+##   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
+## 1 Low8  #79                 25.4        43.8          19               8
+## 2 Low8  #100                20          39.2          20               8
+## 3 Low8  #4/84               21.8        35.2          20               4
+## 4 Low8  #108                25.6        47.5          20               8
+## 5 Low8  #99                 23.5        39            20               6
+## 6 Low8  #110                25.5        42.7          20               7
+## # ℹ 2 more variables: pups_dead_birth &lt;dbl&gt;, pups_survive &lt;dbl&gt;</code></pre>
+<p>You can use <code>view(litters_df)</code> to view the whole
+dataset.</p>
+<p>Looking at a data summary</p>
+<pre class="r"><code>str(litters_df)</code></pre>
+<pre><code>## spc_tbl_ [49 × 8] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ group          : chr [1:49] &quot;Con7&quot; &quot;Con7&quot; &quot;Con7&quot; &quot;Con7&quot; ...
+##  $ litter_number  : chr [1:49] &quot;#85&quot; &quot;#1/2/95/2&quot; &quot;#5/5/3/83/3-3&quot; &quot;#5/4/2/95/2&quot; ...
+##  $ gd0_weight     : num [1:49] 19.7 27 26 28.5 NA NA NA NA NA 28.5 ...
+##  $ gd18_weight    : num [1:49] 34.7 42 41.4 44.1 NA NA NA NA NA NA ...
+##  $ gd_of_birth    : num [1:49] 20 19 19 19 20 20 20 20 20 20 ...
+##  $ pups_born_alive: num [1:49] 3 8 6 5 6 6 9 9 8 8 ...
+##  $ pups_dead_birth: num [1:49] 4 0 0 1 0 0 0 1 0 0 ...
+##  $ pups_survive   : num [1:49] 3 7 5 4 6 4 9 8 8 8 ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   Group = col_character(),
+##   ..   `Litter Number` = col_character(),
+##   ..   `GD0 weight` = col_double(),
+##   ..   `GD18 weight` = col_double(),
+##   ..   `GD of Birth` = col_double(),
+##   ..   `Pups born alive` = col_double(),
+##   ..   `Pups dead @ birth` = col_double(),
+##   ..   `Pups survive` = col_double()
+##   .. )
+##  - attr(*, &quot;problems&quot;)=&lt;externalptr&gt;</code></pre>
+<p>Another tool is <code>skimr::skim</code>, although it’s more “neat”
+than useful.</p>
+<pre class="r"><code>skimr::skim(litters_df)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">litters_df</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">49</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">6</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="19%" />
+<col width="5%" />
+<col width="5%" />
+<col width="8%" />
+<col width="12%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">group</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">litter_number</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">15</td>
+<td align="right">0</td>
+<td align="right">49</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="18%" />
+<col width="11%" />
+<col width="16%" />
+<col width="7%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="5%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">gd0_weight</td>
+<td align="right">15</td>
+<td align="right">0.69</td>
+<td align="right">24.38</td>
+<td align="right">3.28</td>
+<td align="right">17.0</td>
+<td align="right">22.30</td>
+<td align="right">24.10</td>
+<td align="right">26.67</td>
+<td align="right">33.4</td>
+<td align="left">▃▇▇▆▁</td>
+</tr>
+<tr class="even">
+<td align="left">gd18_weight</td>
+<td align="right">17</td>
+<td align="right">0.65</td>
+<td align="right">41.52</td>
+<td align="right">4.05</td>
+<td align="right">33.4</td>
+<td align="right">38.88</td>
+<td align="right">42.25</td>
+<td align="right">43.80</td>
+<td align="right">52.7</td>
+<td align="left">▃▃▇▂▁</td>
+</tr>
+<tr class="odd">
+<td align="left">gd_of_birth</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">19.65</td>
+<td align="right">0.48</td>
+<td align="right">19.0</td>
+<td align="right">19.00</td>
+<td align="right">20.00</td>
+<td align="right">20.00</td>
+<td align="right">20.0</td>
+<td align="left">▅▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td align="left">pups_born_alive</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">7.35</td>
+<td align="right">1.76</td>
+<td align="right">3.0</td>
+<td align="right">6.00</td>
+<td align="right">8.00</td>
+<td align="right">8.00</td>
+<td align="right">11.0</td>
+<td align="left">▁▃▂▇▁</td>
+</tr>
+<tr class="odd">
+<td align="left">pups_dead_birth</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">0.33</td>
+<td align="right">0.75</td>
+<td align="right">0.0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">4.0</td>
+<td align="left">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">pups_survive</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6.41</td>
+<td align="right">2.05</td>
+<td align="right">1.0</td>
+<td align="right">5.00</td>
+<td align="right">7.00</td>
+<td align="right">8.00</td>
+<td align="right">9.0</td>
+<td align="left">▁▃▂▇▇</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 

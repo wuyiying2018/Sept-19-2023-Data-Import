@@ -6,15 +6,40 @@ output: html_document
 library("tidyverse")
 ```
 
+## Data Paths
 Let's import the `FAS_litters.csv`
 ```{r}
 litters_df=read_csv("./data/FAS_litters.csv")
+```
+
+use `janitor::clean_names()` to clean up variable names after importing data. Doing so will take whatever the column names are and convert them to lower snake case.
+```{r}
+names(litters_df)
 #make the variable names all lowercase
 litters_df=janitor::clean_names(litters_df)
+names(litters_df)
+```
+
+_**Learning Assessment: **_load the FAS_pups.csv dataset
+```{r}
+pup_df=read_csv("./data/FAS_pups.csv")
+litters_df=janitor::clean_names(litters_df)
+```
+## Looking at data
+```{r}
+litters_df
+head(litters_df)
+tail(litters_df)
+```
+You can use `view(litters_df)` to view the whole dataset.
+
+Looking at a data summary
+```{r}
+str(litters_df)
+```
+Another tool is `skimr::skim`, although it’s more “neat” than useful.
+```{r}
+skimr::skim(litters_df)
 ```
 
 
-# Section 1
-
-Here's a **code chunk** that samples from 
-a _normal distribution_:
